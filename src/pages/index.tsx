@@ -1,15 +1,7 @@
 import useSWR from 'swr'
 
-const fetcher = (query) =>
-  fetch('/api/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ query }),
-  })
-    .then((res) => res.json())
-    .then((json) => json.data)
+import { Header } from '../components/header/header';
+import { fetcher } from '../utils/fetcher';
 
 export default function Index() {
   const { data, error } = useSWR('{ users { name } }', fetcher)
@@ -21,6 +13,7 @@ export default function Index() {
 
   return (
     <div>
+      <Header />
       {users.map((user, i) => (
         <div key={i}>{user.name}</div>
       ))}
